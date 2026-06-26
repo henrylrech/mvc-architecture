@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Impacto da Pandemia{% endblock %}
+
+{% block content %}
+<h2 class="h4 mb-1">Impacto da Pandemia nas Matrículas (2019–2022)</h2>
+<p class="text-muted mb-3">Variação percentual de matrículas durante o período pandêmico na Região Sul.</p>
+
+<form class="row g-3 align-items-end mb-4"
+      hx-get="/evolution/pandemic-impact/summary"
+      hx-target="#pandemic-area"
+      hx-trigger="change"
+      hx-include="this">
+
+  <div class="col-md-4">
+    <label class="form-label fw-semibold" for="filter_type">Filtrar por</label>
+    <select class="form-select" id="filter_type" name="filter_type">
+      <option value="degree"   {% if filter_type == "degree" %}selected{% endif %}>Grau Acadêmico</option>
+      <option value="category" {% if filter_type == "category" %}selected{% endif %}>Categoria Administrativa</option>
+    </select>
+  </div>
+
+  <div class="col-md-4">
+    <label class="form-label fw-semibold" for="filter_value">Valor</label>
+    <select class="form-select" id="filter_value" name="filter_value">
+      {% if filter_type == "degree" %}
+        <option value="Bacharelado"  {% if filter_value == "Bacharelado" %}selected{% endif %}>Bacharelado</option>
+        <option value="Licenciatura" {% if filter_value == "Licenciatura" %}selected{% endif %}>Licenciatura</option>
+        <option value="Tecnológico"  {% if filter_value == "Tecnológico" %}selected{% endif %}>Tecnológico</option>
+      {% else %}
+        <option value="Públicas"  {% if filter_value == "Públicas" %}selected{% endif %}>Públicas</option>
+        <option value="Privadas"  {% if filter_value == "Privadas" %}selected{% endif %}>Privadas</option>
+      {% endif %}
+    </select>
+  </div>
+</form>
+
+<div id="pandemic-area">
+  {% include "partials/_pandemic_summary.html" %}
+</div>
+{% endblock %}

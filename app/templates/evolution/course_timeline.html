@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Evolução de Curso{% endblock %}
+
+{% block content %}
+<h2 class="h4 mb-3">Evolução de Matrículas por Curso</h2>
+
+<form class="row g-3 align-items-end mb-4"
+      hx-get="/evolution/course-timeline/chart"
+      hx-target="#timeline-area"
+      hx-trigger="change"
+      hx-include="this">
+
+  <div class="col-md-6">
+    <label class="form-label fw-semibold" for="course">Curso</label>
+    <select class="form-select" id="course" name="course">
+      <option value="">— selecione um curso —</option>
+      {% for name in course_names %}
+      <option value="{{ name }}" {% if name == selected_course %}selected{% endif %}>{{ name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div class="col-md-3">
+    <label class="form-label fw-semibold" for="modality">Modalidade</label>
+    <select class="form-select" id="modality" name="modality">
+      <option value="Todos" {% if modality == "Todos" %}selected{% endif %}>Todas</option>
+      <option value="Presencial" {% if modality == "Presencial" %}selected{% endif %}>Presencial</option>
+      <option value="EaD" {% if modality == "EaD" %}selected{% endif %}>EaD</option>
+    </select>
+  </div>
+</form>
+
+<div id="timeline-area">
+  {% include "partials/_timeline_chart.html" %}
+</div>
+{% endblock %}

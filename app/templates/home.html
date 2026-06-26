@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block title %}Início{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+  <div class="col">
+    <h1 class="h3">Matrículas de Graduação — Região Sul do Brasil</h1>
+    <p class="text-muted">Análise do dataset público do MEC/INEP sobre matrículas nos estados do PR, SC e RS.</p>
+  </div>
+</div>
+
+<div class="row g-3 mb-4">
+  <div class="col-md-3">
+    <div class="card text-center border-primary">
+      <div class="card-body">
+        <h5 class="card-title text-primary">Matrículas em 2023</h5>
+        <p class="display-6 fw-bold">{{ "{:,}".format(stats.total_2023).replace(",", ".") }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card text-center border-success">
+      <div class="card-body">
+        <h5 class="card-title text-success">Cursos Distintos</h5>
+        <p class="display-6 fw-bold">{{ stats.distinct_courses }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card text-center border-warning">
+      <div class="card-body">
+        <h5 class="card-title text-warning">Instituições (IES)</h5>
+        <p class="display-6 fw-bold">{{ stats.distinct_ies }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card text-center border-info">
+      <div class="card-body">
+        <h5 class="card-title text-info">Período</h5>
+        <p class="display-6 fw-bold">{{ stats.year_min }}–{{ stats.year_max }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row g-3">
+  <div class="col-md-4">
+    <div class="card h-100">
+      <div class="card-body">
+        <h6 class="card-title">Matrículas por Ano</h6>
+        <p class="card-text small text-muted">Total de matrículas por ano na região Sul, com filtro por modalidade (EaD / Presencial).</p>
+        <a href="/aggregated/enrollment-by-year" class="btn btn-sm btn-outline-primary">Ver análise</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card h-100">
+      <div class="card-body">
+        <h6 class="card-title">Ranking de Cursos 2023</h6>
+        <p class="card-text small text-muted">Top 10 cursos mais matriculados em 2023, por modalidade.</p>
+        <a href="/aggregated/top-courses/Presencial" class="btn btn-sm btn-outline-primary me-1">Presencial</a>
+        <a href="/aggregated/top-courses/EaD" class="btn btn-sm btn-outline-secondary">EaD</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card h-100">
+      <div class="card-body">
+        <h6 class="card-title">Ranking de IES 2023</h6>
+        <p class="card-text small text-muted">Instituições com mais matrículas em 2023, com filtro público/privado.</p>
+        <a href="/aggregated/top-institutions/Presencial" class="btn btn-sm btn-outline-primary me-1">Presencial</a>
+        <a href="/aggregated/top-institutions/EaD" class="btn btn-sm btn-outline-secondary">EaD</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card h-100">
+      <div class="card-body">
+        <h6 class="card-title">Evolução de Curso</h6>
+        <p class="card-text small text-muted">Selecione um curso e visualize a evolução das matrículas ao longo dos anos.</p>
+        <a href="/evolution/course-timeline" class="btn btn-sm btn-outline-primary">Ver evolução</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card h-100">
+      <div class="card-body">
+        <h6 class="card-title">Impacto da Pandemia</h6>
+        <p class="card-text small text-muted">Variação de matrículas de 2019 a 2022, por grau ou categoria administrativa.</p>
+        <a href="/evolution/pandemic-impact" class="btn btn-sm btn-outline-primary">Ver análise</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

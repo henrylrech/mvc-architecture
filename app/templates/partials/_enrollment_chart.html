@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="col-lg-8 mb-4">
+    <canvas id="enrollmentChart" height="280"></canvas>
+  </div>
+  <div class="col-lg-4">
+    <table class="table table-sm table-bordered">
+      <thead class="table-dark">
+        <tr><th>Ano</th><th class="text-end">Matrículas</th></tr>
+      </thead>
+      <tbody>
+        {% for row in rows %}
+        <tr>
+          <td>{{ row.year }}</td>
+          <td class="text-end">{{ "{:,}".format(row.total).replace(",", ".") }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+(function() {
+  const existing = Chart.getChart("enrollmentChart");
+  if (existing) existing.destroy();
+
+  const labels = {{ labels | tojson }};
+  const values = {{ values | tojson }};
+  new Chart(document.getElementById("enrollmentChart"), {
+    type: "bar",
+    data: {
+      labels: labels,
+      datasets: [{
+        label: "Matrículas",
+        data: values,
+        backgroundColor: "rgba(13,110,253,0.7)",
+        borderColor: "rgba(13,110,253,1)",
+        borderWidth: 1
+      }]
+    },
+    options: {
+      plugins: { legend: { display: false } },
+      scales: { y: { beginAtZero: false } }
+    }
+  });
+})();
+</script>

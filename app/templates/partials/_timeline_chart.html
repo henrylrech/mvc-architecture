@@ -1,0 +1,47 @@
+{% if selected_course %}
+<div class="row">
+  <div class="col-lg-9 mb-3">
+    <canvas id="timelineChart" height="280"></canvas>
+  </div>
+</div>
+
+<script>
+(function() {
+  const existing = Chart.getChart("timelineChart");
+  if (existing) existing.destroy();
+
+  const labels = {{ labels | tojson }};
+  const values = {{ values | tojson }};
+  new Chart(document.getElementById("timelineChart"), {
+    type: "line",
+    data: {
+      labels: labels,
+      datasets: [{
+        label: "{{ selected_course }}{% if modality != 'Todos' %} ({{ modality }}){% endif %}",
+        data: values,
+        tension: 0.3,
+        fill: false,
+        borderColor: "rgba(13,110,253,1)",
+        backgroundColor: "rgba(13,110,253,0.2)",
+        pointRadius: 5
+      }]
+    },
+    options: {
+      scales: { y: { beginAtZero: false } }
+    }
+  });
+})();
+</script>
+
+{% if values | length == 0 %}
+<div class="alert alert-warning mt-3">
+  Nenhum dado encontrado para <strong>{{ selected_course }}</strong>
+  {% if modality != "Todos" %}na modalidade <strong>{{ modality }}</strong>{% endif %}.
+</div>
+{% endif %}
+
+{% else %}
+<div class="alert alert-info">
+  Selecione um curso no formulário acima para visualizar a evolução das matrículas.
+</div>
+{% endif %}

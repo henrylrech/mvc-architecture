@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Top Cursos {{ modality }}{% endblock %}
+
+{% block content %}
+<h2 class="h4 mb-1">Top 10 Cursos em 2023 — {{ modality }}</h2>
+<p class="text-muted mb-3">Cursos com maior número de matrículas na Região Sul em 2023.</p>
+
+<div class="mb-3">
+  <a href="/aggregated/top-courses/Presencial"
+     class="btn btn-sm {% if modality == 'Presencial' %}btn-primary{% else %}btn-outline-primary{% endif %} me-1">
+    Presencial
+  </a>
+  <a href="/aggregated/top-courses/EaD"
+     class="btn btn-sm {% if modality == 'EaD' %}btn-primary{% else %}btn-outline-secondary{% endif %}">
+    EaD
+  </a>
+</div>
+
+<div class="row">
+  <div class="col-lg-7">
+    <canvas id="topCoursesChart" height="300"></canvas>
+  </div>
+  <div class="col-lg-5">
+    <table class="table table-sm table-striped">
+      <thead class="table-dark">
+        <tr><th>#</th><th>Curso</th><th class="text-end">Matrículas</th></tr>
+      </thead>
+      <tbody>
+        {% for row in rows %}
+        <tr>
+          <td>{{ loop.index }}</td>
+          <td>{{ row.course_name }}</td>
+          <td class="text-end">{{ "{:,}".format(row.total).replace(",", ".") }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+const labels = {{ rows | map(attribute="course_name") | list | tojson }};
+const values = {{ rows | map(attribute="total") | list | tojson }};
+new Chart(document.getElementById("topCoursesChart"), {
+  type: "bar",
+  data: {
+    labels: labels,
+    datasets: [{
+      label: "Matrículas 2023",
+      data: values,
+      backgroundColor: "rgba(13,110,253,0.75)"
+    }]
+  },
+  options: {
+    indexAxis: "y",
+    plugins: { legend: { display: false } },
+    scales: { x: { beginAtZero: true } }
+  }
+});
+</script>
+{% endblock %}

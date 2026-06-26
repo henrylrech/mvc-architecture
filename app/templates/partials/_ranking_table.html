@@ -1,0 +1,74 @@
+{% if rank_type == "institutions" %}
+<div class="row">
+  <div class="col-lg-8 mb-4">
+    <canvas id="rankingChart" height="360"></canvas>
+  </div>
+  <div class="col-lg-4">
+    <table class="table table-sm table-striped">
+      <thead class="table-dark">
+        <tr>
+          <th>#</th>
+          <th>IES</th>
+          <th>Sigla</th>
+          <th>Cat.</th>
+          <th class="text-end">Matrículas</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in rows %}
+        <tr>
+          <td>{{ loop.index }}</td>
+          <td>{{ row.institution_name }}</td>
+          <td>{{ row.institution_acronym }}</td>
+          <td><small>{{ row.administrative_category }}</small></td>
+          <td class="text-end">{{ "{:,}".format(row.total).replace(",", ".") }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+(function() {
+  const existing = Chart.getChart("rankingChart");
+  if (existing) existing.destroy();
+
+  const labels = {{ rows | map(attribute="institution_acronym") | list | tojson }};
+  const values = {{ rows | map(attribute="total") | list | tojson }};
+  new Chart(document.getElementById("rankingChart"), {
+    type: "bar",
+    data: {
+      labels: labels,
+      datasets: [{
+        label: "Matrículas 2023",
+        data: values,
+        backgroundColor: "rgba(25,135,84,0.75)"
+      }]
+    },
+    options: {
+      indexAxis: "y",
+      plugins: { legend: { display: false } },
+      scales: { x: { beginAtZero: true } }
+    }
+  });
+})();
+</script>
+
+{% else %}
+{# courses ranking — static table, chart in top_courses.html #}
+<table class="table table-sm table-striped">
+  <thead class="table-dark">
+    <tr><th>#</th><th>Curso</th><th class="text-end">Matrículas</th></tr>
+  </thead>
+  <tbody>
+    {% for row in rows %}
+    <tr>
+      <td>{{ loop.index }}</td>
+      <td>{{ row.course_name }}</td>
+      <td class="text-end">{{ "{:,}".format(row.total).replace(",", ".") }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}

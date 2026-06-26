@@ -1,0 +1,2 @@
+litestar[minijinja]>=2.8.0
+uvicorn[standard]>=0.29.0
