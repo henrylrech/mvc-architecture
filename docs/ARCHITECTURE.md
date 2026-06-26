@@ -77,7 +77,7 @@ Não há camada de serviço/analytics separada. Os Controllers chamam o Reposito
 Requisição completa (navegação):
 
   Browser
-    │  HTTP GET /evolution/pandemic-impact
+    │  HTTP GET /enrollment/pandemic-impact
     ▼
   EnrollmentController.pandemic_impact()
     │  _repo.get_pandemic_totals(filter_type, filter_value)
@@ -94,7 +94,7 @@ Requisição completa (navegação):
   EnrollmentController
     │  calcula _pct_change() → monta contexto
     ▼
-  Template: evolution/pandemic_impact.html
+  Template: enrollment/pandemic_impact.html
     │  renderiza HTML completo
     ▼
   Browser (página completa)
@@ -103,7 +103,7 @@ Requisição completa (navegação):
 Re-renderização parcial via HTMX (mudança de filtro):
 
   Browser
-    │  hx-get /evolution/pandemic-impact/summary?filter_type=...
+    │  hx-get /enrollment/pandemic-impact/summary?filter_type=...
     ▼
   EnrollmentController.pandemic_impact_summary()
     │  (mesmo fluxo acima)

@@ -7,11 +7,11 @@
 
 <!-- Modality switch -->
 <div class="mb-2">
-  <a href="/aggregated/top-institutions/Presencial?adm_filter={{ adm_filter }}"
+  <a href="/enrollment/top-institutions/Presencial?adm_filter={{ adm_filter }}"
      class="btn btn-sm {% if modality == 'Presencial' %}btn-primary{% else %}btn-outline-primary{% endif %} me-1">
     Presencial
   </a>
-  <a href="/aggregated/top-institutions/EaD?adm_filter={{ adm_filter }}"
+  <a href="/enrollment/top-institutions/EaD?adm_filter={{ adm_filter }}"
      class="btn btn-sm {% if modality == 'EaD' %}btn-primary{% else %}btn-outline-secondary{% endif %}">
     EaD
   </a>
@@ -19,7 +19,7 @@
 
 <!-- Adm filter with HTMX -->
 <form class="row g-2 align-items-end mb-4"
-      hx-get="/aggregated/top-institutions/{{ modality }}/table"
+      hx-get="/enrollment/top-institutions/{{ modality }}/table"
       hx-target="#inst-table-area"
       hx-trigger="change"
       hx-include="this">

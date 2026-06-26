@@ -110,10 +110,10 @@ docs/
 | Rota | Descrição |
 |------|-----------|
 | `/` | Página inicial com resumo |
-| `/aggregated/enrollment-by-year` | Total de matrículas por ano (filtro: modalidade) |
-| `/aggregated/top-courses/Presencial` | Top 10 cursos presenciais em 2023 |
-| `/aggregated/top-courses/EaD` | Top 10 cursos EaD em 2023 |
-| `/aggregated/top-institutions/Presencial` | Top IES presencial em 2023 (filtro: pública/privada) |
-| `/aggregated/top-institutions/EaD` | Top IES EaD em 2023 (filtro: pública/privada) |
-| `/evolution/course-timeline` | Evolução de matrículas por curso ao longo dos anos |
-| `/evolution/pandemic-impact` | Impacto da pandemia 2019–2022 |
+| `/enrollment/enrollment-by-year` | Total de matrículas por ano (filtro: modalidade) |
+| `/enrollment/top-courses/Presencial` | Top 10 cursos presenciais em 2023 |
+| `/enrollment/top-courses/EaD` | Top 10 cursos EaD em 2023 |
+| `/enrollment/top-institutions/Presencial` | Top IES presencial em 2023 (filtro: pública/privada) |
+| `/enrollment/top-institutions/EaD` | Top IES EaD em 2023 (filtro: pública/privada) |
+| `/enrollment/course-timeline` | Evolução de matrículas por curso ao longo dos anos |
+| `/enrollment/pandemic-impact` | Impacto da pandemia 2019–2022 |

@@ -31,7 +31,7 @@ class EnrollmentController(Controller):
     # Feature 1 — Total enrollment by year
     # ------------------------------------------------------------------
 
-    @get("/aggregated/enrollment-by-year", name="enrollment_by_year")
+    @get("/enrollment/enrollment-by-year", name="enrollment_by_year")
     async def enrollment_by_year(self, modality: str = "Todos") -> Template:
         mod = None if modality == "Todos" else modality
         rows = _repo.get_total_by_year(mod)
@@ -42,7 +42,7 @@ class EnrollmentController(Controller):
             context={"modality": modality, "labels": labels, "values": values, "rows": rows},
         )
 
-    @get("/aggregated/enrollment-by-year/chart", name="enrollment_by_year_chart")
+    @get("/enrollment/enrollment-by-year/chart", name="enrollment_by_year_chart")
     async def enrollment_by_year_chart(self, modality: str = "Todos") -> Template:
         """HTMX partial."""
         mod = None if modality == "Todos" else modality
@@ -58,7 +58,7 @@ class EnrollmentController(Controller):
     # Features 2 & 3 — Top courses
     # ------------------------------------------------------------------
 
-    @get("/aggregated/top-courses/{modality:str}", name="top_courses")
+    @get("/enrollment/top-courses/{modality:str}", name="top_courses")
     async def top_courses(self, modality: str) -> Template:
         safe = modality if modality in ("EaD", "Presencial") else "Presencial"
         rows = _repo.get_top_courses_2023(safe)
@@ -67,7 +67,7 @@ class EnrollmentController(Controller):
             context={"modality": safe, "rows": rows},
         )
 
-    @get("/aggregated/top-courses/{modality:str}/table", name="top_courses_table")
+    @get("/enrollment/top-courses/{modality:str}/table", name="top_courses_table")
     async def top_courses_table(self, modality: str) -> Template:
         """HTMX partial."""
         safe = modality if modality in ("EaD", "Presencial") else "Presencial"
@@ -81,7 +81,7 @@ class EnrollmentController(Controller):
     # Features 4 & 5 — Top institutions
     # ------------------------------------------------------------------
 
-    @get("/aggregated/top-institutions/{modality:str}", name="top_institutions")
+    @get("/enrollment/top-institutions/{modality:str}", name="top_institutions")
     async def top_institutions(self, modality: str, adm_filter: str = "Todos") -> Template:
         safe = modality if modality in ("EaD", "Presencial") else "Presencial"
         adm = None if adm_filter == "Todos" else adm_filter
@@ -91,7 +91,7 @@ class EnrollmentController(Controller):
             context={"modality": safe, "adm_filter": adm_filter, "rows": rows, "rank_type": "institutions"},
         )
 
-    @get("/aggregated/top-institutions/{modality:str}/table", name="top_institutions_table")
+    @get("/enrollment/top-institutions/{modality:str}/table", name="top_institutions_table")
     async def top_institutions_table(self, modality: str, adm_filter: str = "Todos") -> Template:
         """HTMX partial."""
         safe = modality if modality in ("EaD", "Presencial") else "Presencial"
@@ -106,7 +106,7 @@ class EnrollmentController(Controller):
     # Feature 6 — Course timeline
     # ------------------------------------------------------------------
 
-    @get("/evolution/course-timeline", name="course_timeline")
+    @get("/enrollment/course-timeline", name="course_timeline")
     async def course_timeline(self, course: str = "", modality: str = "Todos") -> Template:
         course_names = _repo.get_all_course_names()
         labels: list[str] = []
@@ -127,7 +127,7 @@ class EnrollmentController(Controller):
             },
         )
 
-    @get("/evolution/course-timeline/chart", name="course_timeline_chart")
+    @get("/enrollment/course-timeline/chart", name="course_timeline_chart")
     async def course_timeline_chart(self, course: str = "", modality: str = "Todos") -> Template:
         """HTMX partial."""
         labels: list[str] = []
@@ -146,7 +146,7 @@ class EnrollmentController(Controller):
     # Feature 7 — Pandemic impact
     # ------------------------------------------------------------------
 
-    @get("/evolution/pandemic-impact", name="pandemic_impact")
+    @get("/enrollment/pandemic-impact", name="pandemic_impact")
     async def pandemic_impact(self, filter_type: str = "degree", filter_value: str = "Bacharelado") -> Template:
         rows = _repo.get_pandemic_totals(filter_type, filter_value)
         yearly_changes, overall_pct = self._build_pandemic_summary(rows)
@@ -162,7 +162,7 @@ class EnrollmentController(Controller):
             },
         )
 
-    @get("/evolution/pandemic-impact/summary", name="pandemic_impact_summary")
+    @get("/enrollment/pandemic-impact/summary", name="pandemic_impact_summary")
     async def pandemic_impact_summary(self, filter_type: str = "degree", filter_value: str = "Bacharelado") -> Template:
         """HTMX partial."""
         rows = _repo.get_pandemic_totals(filter_type, filter_value)
